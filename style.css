@@ -1,0 +1,285 @@
+:root {
+  --primary-color: #3a4660;
+  --secondary-color: #c9af98;
+  --accent-color: #845007;
+  --text-color: #333;
+  --light-color: #f8f1e9;
+  --header-color: #2c3a52;
+}
+
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* Enhanced animated background */
+  background: linear-gradient(135deg, #e0eafc, #cfdef3, #e0eafc); /* Light blue tones */
+  background-size: 400% 400%; /* Allows for larger gradient movement */
+  animation: backgroundAnimation 15s ease infinite; /* Smooth, continuous animation */
+  color: var(--text-color);
+  overflow: hidden; /* Prevents scrollbars from background animation */
+  position: relative;
+}
+
+/* Background animation */
+@keyframes backgroundAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  width: 90%;
+  max-width: 500px;
+  margin: 20px;
+  position: relative; /* Ensure container is above the animated background */
+  z-index: 1; /* Make sure the content is above the background */
+}
+
+/* Header Styles */
+.clock-header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.clock-header h1 {
+  font-size: 2rem;
+  color: var(--header-color);
+  margin: 0;
+  padding: 15px 0;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease; /* Smooth transition for hover */
+}
+
+.clock-header h1 i {
+  margin-right: 15px;
+  color: var(--accent-color);
+  transition: transform 0.5s ease; /* Smooth transition for pulsing */
+}
+
+.header-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+  border-radius: 3px;
+  animation: headerLine 2s infinite alternate;
+}
+
+/* Clock Container */
+.clock-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+/* Analog Clock Styles */
+.analog-clock {
+  width: 180px;
+  height: 180px;
+  border: 8px solid var(--primary-color);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+  background: var(--light-color);
+  margin-bottom: 30px;
+}
+
+.clock-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%; /* Position from the bottom center of the clock */
+  left: 50%; /* Position from the horizontal center of the clock */
+  transform-origin: 50% 100%; /* Rotate around the base of the hand */
+  border-radius: 10px;
+  transition: all 0.5s cubic-bezier(0.4, 2.3, 0.3, 1); /* Springy transition */
+  /* *** IMPORTANT CHANGE HERE: Initial rotation to point to 12 o'clock *** */
+  transform: rotate(-90deg); /* CSS default 0deg is right, so -90deg points up */
+}
+
+.hour-hand {
+  width: 6px;
+  height: 50px;
+  background: var(--primary-color);
+  margin-left: -3px; /* Center the hand horizontally */
+}
+
+.minute-hand {
+  width: 4px;
+  height: 70px;
+  background: var(--accent-color);
+  margin-left: -2px; /* Center the hand horizontally */
+}
+
+.second-hand {
+  width: 2px;
+  height: 80px;
+  background: #c00; /* Red color for second hand */
+  margin-left: -1px; /* Center the hand horizontally */
+  transition: all 0.2s cubic-bezier(0.4, 2.3, 0.3, 1); /* Faster springy transition */
+}
+
+.center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  margin: -6px 0 0 -6px; /* Center the circle */
+  z-index: 10; /* Ensure it's above the hands */
+}
+
+/* Clock markers - Corrected for proper alignment */
+.marker {
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  background: var(--primary-color);
+  left: 50%; /* Start from center of clock */
+  top: 50%; /* Start from center of clock */
+  margin-left: -2px; /* Half of marker width to center it horizontally */
+  margin-top: -6px; /* Half of marker height to center it vertically for rotation */
+  transform-origin: center center; /* Rotate around its own center */
+}
+
+/* For a 180px clock (radius 90px), marker height 12px -> 90 - (12/2) = 84px */
+.marker-12 { transform: translateY(-84px); } /* Translate upwards */
+.marker-3 { transform: rotate(90deg) translateY(-84px); } /* Rotate and then translate */
+.marker-6 { transform: rotate(180deg) translateY(-84px); }
+.marker-9 { transform: rotate(270deg) translateY(-84px); }
+
+
+/* Digital Clock Styles */
+.digital-clock {
+  text-align: center;
+  width: 100%;
+}
+
+.time {
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  font-family: 'Courier New', monospace; /* Monospaced font for digital clarity */
+}
+
+.date {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes headerLine {
+  0% { width: 100px; }
+  100% { width: 150px; }
+}
+
+/* Adjusted fadeIn animation for digital clock content */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover Effects */
+.clock-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .clock-header h1 {
+    font-size: 1.8rem; /* Slightly larger for better readability on small screens */
+  }
+  
+  .analog-clock {
+    width: 160px; /* Slightly larger analog clock */
+    height: 160px;
+    border: 6px solid var(--primary-color); /* Thinner border */
+  }
+  
+  .hour-hand { height: 45px; }
+  .minute-hand { height: 65px; }
+  .second-hand { height: 75px; }
+  
+  .marker {
+    height: 10px; /* Smaller markers */
+    margin-top: -5px; /* Half of new marker height */
+  }
+  /* For a 160px clock (radius 80px), marker height 10px -> 80 - (10/2) = 75px */
+  .marker-12 { transform: translateY(-75px); } 
+  .marker-3 { transform: rotate(90deg) translateY(-75px); }
+  .marker-6 { transform: rotate(180deg) translateY(-75px); }
+  .marker-9 { transform: rotate(270deg) translateY(-75px); }
+
+  .time {
+    font-size: 2.2rem; /* Slightly smaller digital time */
+  }
+  
+  .date {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .clock-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .analog-clock {
+    width: 140px;
+    height: 140px;
+    border: 5px solid var(--primary-color);
+  }
+
+  .hour-hand { height: 38px; }
+  .minute-hand { height: 55px; }
+  .second-hand { height: 65px; }
+
+  .marker {
+    height: 8px;
+    margin-top: -4px;
+  }
+  /* For a 140px clock (radius 70px), marker height 8px -> 70 - (8/2) = 66px */
+  .marker-12 { transform: translateY(-66px); } 
+  .marker-3 { transform: rotate(90deg) translateY(-66px); }
+  .marker-6 { transform: rotate(180deg) translateY(-66px); }
+  .marker-9 { transform: rotate(270deg) translateY(-66px); }
+
+  .time {
+    font-size: 1.8rem;
+  }
+
+  .date {
+    font-size: 0.9rem;
+  }
+
+  .clock-container {
+    padding: 30px; /* Reduce padding for smaller screens */
+  }
+}
